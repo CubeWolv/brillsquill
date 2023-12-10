@@ -1,0 +1,96 @@
+.container-for-form h2{
+    text-align: center;
+    margin-bottom:50px;
+    margin-top:40px
+}
+.the-join-title{
+    text-align: center;
+    font-size: 20px;
+}
+.container-for-form{
+    display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 89vh;
+        margin: 0;
+        margin-top:50px;
+        margin-bottom:50px;
+}
+.container-for-form form {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+    }
+
+    .container-for-form label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .container-for-form input {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        color:black;
+        background-color: transparent;
+        margin-top:10px;
+        outline: none;
+    }
+
+    body.dark-mode .container-for-form input{
+        color:white;
+    }
+
+    .container-for-form input:focus {
+    border: 1px solid #777776; 
+    transition: 0.3s ease-out;
+}
+
+    .container-for-form input[type="submit"] {
+        background-color:  transparent;
+        color: rgb(10, 10, 10);
+        border:2px solid rgb(17, 17, 17);
+        cursor: pointer;
+    }
+
+    .container-for-form input[type="submit"]:hover {
+        background-color: #1a1a1a;
+        color:white;
+    
+    }
+
+    body.dark-mode  .container-for-form input[type="submit"] {
+        background-color:  white;
+        color: black;
+        border:2px solid white;
+        cursor: pointer;
+    }
+
+    body.dark-mode  .container-for-form input[type="submit"]:hover {
+        background-color:#1a1a1a;
+        color:white;
+    }
+
+    .agreeing-to-the-policy{
+        text-align: center;
+        font-size: 14px;
+        margin-bottom:25px;
+        margin-top:30px;
+    }
+
+
+    .the-other-join-link{
+        border-bottom: 1px solid #F17720;
+        text-decoration: none;
+    }
+    .the-other-join-link:focus{
+        text-decoration: none;
+    }
+    .the-other-join-link:hover{
+        color: grey;
+        text-decoration: none;
+    }
