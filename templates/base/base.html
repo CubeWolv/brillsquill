@@ -16,7 +16,8 @@
     <header>
         <nav class="the-menu">
             <a href="{% url 'home' %}" id="logo">
-                <p class="the-logo-word"><span style="color: orangered;"><img src="{% static 'images/logo.png' %}"></span>Brillsquill</p>
+                <p class="the-logo-word"><span style="color: orangered;"><img
+                            src="{% static 'images/logo.png' %}"></span>Brillsquill</p>
             </a>
 
 
@@ -78,371 +79,386 @@
                     <a href="{% url 'home' %}" class="the-link-for-home the-links">Home</a>
                 </li>
                 <li>
-                    <a class="the-links"  style="cursor: pointer;" onclick="toggleDarkMode()"> <span id="modeIcon" class="material-symbols-outlined">light_mode</span></a>
+                    <a class="the-links" style="cursor: pointer;" onclick="toggleDarkMode()"> <span id="modeIcon"
+                            class="material-symbols-outlined">light_mode</span></a>
                 </li>
-
+                {% if user.is_authenticated %}
                 <li style="margin-right: 30px;" class="the-button-for-login-g-bu-one">
 
-                    {% if user.is_authenticated %}
                     <a href="" style="border-radius: 50%;" class="get-one-button">
                         <span style="font-size: 40px;" class="material-symbols-outlined">account_circle</span>
                     </a>
-{% else %}
-    <a href="{% url 'signup' %}">Join</a>
-    <a href="{% url 'login' %}">Login</a>
-{% endif %}
-                </li>
+                    </li>
+                    
+                    {% else %}
+                    <li>
+                        <a href="{% url 'signup' %}">Join</a>
+                        </li>
+                        <li>
+                        <a href="{% url 'login' %}">Login</a>
+                        </li>
+                    {% endif %}
+                
             </ul>
         </nav>
     </header>
     <script>
- // script.js
+        // script.js
 
-// Function to toggle dark mode and save the user's preference
-function toggleDarkMode() {
-    const body = document.body;
-    body.classList.toggle('dark-mode');
+        // Function to toggle dark mode and save the user's preference
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
 
-    // Save the user's preference to local storage
-    const isDarkMode = body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode);
+            // Save the user's preference to local storage
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
 
-    // Update the mode icon
-    updateModeIcon(isDarkMode);
-}
+            // Update the mode icon
+            updateModeIcon(isDarkMode);
+        }
 
-// Function to update the mode icon
-function updateModeIcon(isDarkMode) {
-    const modeIcon = document.getElementById('modeIcon');
+        // Function to update the mode icon
+        function updateModeIcon(isDarkMode) {
+            const modeIcon = document.getElementById('modeIcon');
 
-    // Change the Material Icon based on the dark mode state
-    modeIcon.textContent = isDarkMode ? 'nights_stay' : 'wb_sunny';
-}
+            // Change the Material Icon based on the dark mode state
+            modeIcon.textContent = isDarkMode ? 'nights_stay' : 'wb_sunny';
+        }
 
-// Check if the user had dark mode preference and apply it
-document.addEventListener('DOMContentLoaded', () => {
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+        // Check if the user had dark mode preference and apply it
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedDarkMode = localStorage.getItem('darkMode') === 'true';
 
-    if (savedDarkMode) {
-        document.body.classList.add('dark-mode');
-    }
+            if (savedDarkMode) {
+                document.body.classList.add('dark-mode');
+            }
 
-    // Update the mode icon based on the initial dark mode state
-    updateModeIcon(savedDarkMode);
-});
+            // Update the mode icon based on the initial dark mode state
+            updateModeIcon(savedDarkMode);
+        });
 
     </script>
 
 
-<script>
+    <script>
 
-    let hamMenuIcon = document.getElementById("ham-menu");
-    let navBar = document.getElementById("nav-bar");
-    let closeBtn = document.querySelector(".close-btn");
-    let navLinks = navBar.querySelectorAll("li");
+        let hamMenuIcon = document.getElementById("ham-menu");
+        let navBar = document.getElementById("nav-bar");
+        let closeBtn = document.querySelector(".close-btn");
+        let navLinks = navBar.querySelectorAll("li");
 
-    function toggleMenu() {
-        navBar.classList.toggle("active");
-        hamMenuIcon.classList.toggle("fa-times");
-    }
+        function toggleMenu() {
+            navBar.classList.toggle("active");
+            hamMenuIcon.classList.toggle("fa-times");
+        }
 
-    hamMenuIcon.addEventListener("click", toggleMenu);
-    closeBtn.addEventListener("click", toggleMenu);
+        hamMenuIcon.addEventListener("click", toggleMenu);
+        closeBtn.addEventListener("click", toggleMenu);
 
-    navLinks.forEach((navLink) => {
-        navLink.addEventListener("click", () => {
-            navBar.classList.remove("active");
-            hamMenuIcon.classList.remove("fa-times");
+        navLinks.forEach((navLink) => {
+            navLink.addEventListener("click", () => {
+                navBar.classList.remove("active");
+                hamMenuIcon.classList.remove("fa-times");
+            });
         });
-    });
 
-</script>
-
+    </script>
 
 
 
 
 
-<style>
 
-body {
-    padding: 0;
-    margin: 0;
-    /*font-family: "Anurati", sans-serif;*/
-    font-family: 'poppins', sans-serif;
-}
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            /*font-family: "Anurati", sans-serif;*/
+            font-family: 'poppins', sans-serif;
+        }
 
-body.dark-mode {
-    background-color: #1a1a1a;
-    color: #ffffff;
-}
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
 
-header {
-    width: 100%;
-    height: 80px;
-    padding-top:8px;
-    z-index: 10000;
-    background-color:#F17720;
-    box-shadow: rgba(18, 2, 238, 0.24) 0px 3px 8px;
-
-
-}
-
-#logo img{
-    width:13%;
-}
+        header {
+            width: 100%;
+            height: 80px;
+            padding-top: 8px;
+            z-index: 10000;
+            background-color: #F17720;
+            box-shadow: rgba(18, 2, 238, 0.24) 0px 3px 8px;
 
 
+        }
 
-.the-menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.the-menu ul {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-    font-size: 17px;
-    margin-top: 20px;
-}
-
-.the-menu a {
-    text-decoration: none;
-}
-#logo{
-    color:white;
-    text-decoration: none;
-    font-family: "Anurati", sans-serif;
-    font-weight: lighter;
-    margin-top:0px;
-
-}
-#logo:enabled{
-    text-decoration: none;
-}
-
-.the-menu a#logo {
-    font-weight: lighter;
-    margin-left:40px; font-size: 1.6em;
-}
-
-.the-menu ul a {
-    color:white;
-   
-}
-.searchicon{
-    color:white;
-    font-size: 25px;
-    cursor: pointer;
-    position: relative;
-    right:-150px;
-    top:-2px;
-}
-
-@media(max-width:800px){
-.searchicon{
-    right: -50px;
-}
-}
-
-/*icon search*/
-.searchicon{
-    color:white;
-    font-size: 25px;
-    cursor: pointer;
-    margin-right: 40px;
-}
-.searchform{
-    outline:none;   
-    position: absolute;
-}
-.searchform input{
-    outline: none;
-    background-color: rgba(44, 43, 43, 0.76);
-    border:1px solid black;
-    width:40%;
-    transition: display 0.3s ease;
-    color:white;
-    padding:14px;
-    border-radius: 5px;
-    position: fixed;
-    right:50%;
-    transform: translateX(50%);
-    
-}
-
-@media(max-width:830px){
-    .searchform input {
-        width:80%;
-    }
-}
-.searchform:active{
-   border:1px transparent
-}
-
-@media(max-width:590px){
-.searchicon{
-    position: static;
-    margin-top:5px;
-}
-}
-.the-menu ul a{
-    font-size: 16px;
-    padding:10px;
-    margin:2px;
-    border-radius: 10px;
-    border:2px solid transparent;
-}
-
-.get-one-button {
-    color:orangered;
-    padding: 2px;
-    margin-left: 60px;
-    margin:20px;
-    position: relative;
-    top:-5px;
-}
-
-
-.the-menu ul a:not(.get-one-button):hover{
-    border: 2px solid rgba(255, 255, 255, 0.753);
-    transition: border 0.6s ease;
-    
-}
-
-
-section#home {
-    height: 100vh;
-    display: grid;
-    place-items: center;
-}
-
-.the-menu h1 {
-    font-size: 4rem;
-}
-
-#ham-menu {
-    display: none;
-}
-
-nav ul.active {
-    right: 0;
-}
-
-@media only screen and (max-width: 914px) {
-    #ham-menu {
-        display: block;
-        color: rgb(255, 255, 255);
-        cursor: pointer;
-        margin-right: 30px;
-    }
-
-    #ham-menu:hover {
-        text-decoration: none;
-    }
-    .the-menu ul li a{
-        position: relative;
-        top:40px;
-    }
-
-
-    .the-menu ul {
-        background-color: rgba(0, 0, 0, 0.678);
-        position: fixed;
-        right: -100vw;
-        top: 0px;
-        width: 50vw;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transition: 1s;
-        gap: 0;
-        margin-top:0px;
-    }
-
-    .the-button-for-login-g-bu-one{
-    width:100%;
-    }
-    .get-one-button{
-        position: absolute;
-    left: 45%;
-    transform: translate(-80%, -0%);
-    }
+        #logo img {
+            width: 13%;
+        }
 
 
 
+        .the-menu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .the-menu ul {
-        top: 0px;
-        height: calc(100vh - 0px);
-    }
+        .the-menu ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            font-size: 17px;
+            margin-top: 20px;
+        }
 
-    .close-btn {
-        display: block;
-    }
+        .the-menu a {
+            text-decoration: none;
+        }
 
-    #nav-bar li {
-        padding: 10px;
-        margin: 5px;
-    }
+        #logo {
+            color: white;
+            text-decoration: none;
+            font-family: "Anurati", sans-serif;
+            font-weight: lighter;
+            margin-top: 0px;
 
-    a.get-one-button {
-        padding: 15px;
-    }
+        }
 
-    header {
-        height: 70px;
-    }
+        #logo:enabled {
+            text-decoration: none;
+        }
+
+        .the-menu a#logo {
+            font-weight: lighter;
+            margin-left: 40px;
+            font-size: 1.6em;
+        }
+
+        .the-menu ul a {
+            color: white;
+
+        }
+
+        .searchicon {
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+            position: relative;
+            right: -150px;
+            top: -2px;
+        }
+
+        @media(max-width:800px) {
+            .searchicon {
+                right: -50px;
+            }
+        }
+
+        /*icon search*/
+        .searchicon {
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+            margin-right: 40px;
+        }
+
+        .searchform {
+            outline: none;
+            position: absolute;
+        }
+
+        .searchform input {
+            outline: none;
+            background-color: rgba(44, 43, 43, 0.76);
+            border: 1px solid black;
+            width: 40%;
+            transition: display 0.3s ease;
+            color: white;
+            padding: 14px;
+            border-radius: 5px;
+            position: fixed;
+            right: 50%;
+            transform: translateX(50%);
+
+        }
+
+        @media(max-width:830px) {
+            .searchform input {
+                width: 80%;
+            }
+        }
+
+        .searchform:active {
+            border: 1px transparent
+        }
+
+        @media(max-width:590px) {
+            .searchicon {
+                position: static;
+                margin-top: 5px;
+            }
+        }
+
+        .the-menu ul a {
+            font-size: 16px;
+            padding: 10px;
+            margin: 2px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
+
+        .get-one-button {
+            color: orangered;
+            padding: 2px;
+            margin-left: 60px;
+            margin: 20px;
+            position: relative;
+            top: -5px;
+        }
+
+
+        .the-menu ul a:not(.get-one-button):hover {
+            border: 2px solid rgba(255, 255, 255, 0.753);
+            transition: border 0.6s ease;
+
+        }
+
+
+        section#home {
+            height: 100vh;
+            display: grid;
+            place-items: center;
+        }
+
+        .the-menu h1 {
+            font-size: 4rem;
+        }
+
+        #ham-menu {
+            display: none;
+        }
+
+        nav ul.active {
+            right: 0;
+        }
+
+        @media only screen and (max-width: 914px) {
+            #ham-menu {
+                display: block;
+                color: rgb(255, 255, 255);
+                cursor: pointer;
+                margin-right: 30px;
+            }
+
+            #ham-menu:hover {
+                text-decoration: none;
+            }
+
+            .the-menu ul li a {
+                position: relative;
+                top: 40px;
+            }
+
+
+            .the-menu ul {
+                background-color: rgba(0, 0, 0, 0.678);
+                position: fixed;
+                right: -100vw;
+                top: 0px;
+                width: 50vw;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                transition: 1s;
+                gap: 0;
+                margin-top: 0px;
+            }
+
+            .the-button-for-login-g-bu-one {
+                width: 100%;
+            }
+
+            .get-one-button {
+                position: absolute;
+                left: 45%;
+                transform: translate(-80%, -0%);
+            }
 
 
 
-}
 
-#logo img{
-margin-right:5px;
-}
+            .the-menu ul {
+                top: 0px;
+                height: calc(100vh - 0px);
+            }
 
-@media(max-width:400px){
-#logo img{
-margin-left:-30px;
-margin-right:5px;
-}
-.the-logo-word{
-    font-size: 20px;
-}
-}
+            .close-btn {
+                display: block;
+            }
 
-@media(max-width:500px){
-    .get-one-button{
-        position: absolute;
-    left: 32%;
-    transform: translate(-80%, -0%);
-    }
-    #logo{
-        margin-left:-10px;
-    }
-}
+            #nav-bar li {
+                padding: 10px;
+                margin: 5px;
+            }
 
-@media(max-width:500px){
-    #logo{
-        margin-top: 15px;
-    }
-    }
+            a.get-one-button {
+                padding: 15px;
+            }
 
-.closebtn {
-    position: absolute;
-    left: 15px;
-    top: 10px;
-    font-size: 30px;
-    cursor: pointer;
-    display: none;
-}
+            header {
+                height: 70px;
+            }
 
 
-</style>
+
+        }
+
+        #logo img {
+            margin-right: 5px;
+        }
+
+        @media(max-width:400px) {
+            #logo img {
+                margin-left: -30px;
+                margin-right: 5px;
+            }
+
+            .the-logo-word {
+                font-size: 20px;
+            }
+        }
+
+        @media(max-width:500px) {
+            .get-one-button {
+                position: absolute;
+                left: 32%;
+                transform: translate(-80%, -0%);
+            }
+
+            #logo {
+                margin-left: -10px;
+            }
+        }
+
+        @media(max-width:500px) {
+            #logo {
+                margin-top: 15px;
+            }
+        }
+
+        .closebtn {
+            position: absolute;
+            left: 15px;
+            top: 10px;
+            font-size: 30px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
 
     {% block content %}
 
