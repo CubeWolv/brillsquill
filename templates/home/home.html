@@ -33,7 +33,20 @@
   .container2{
     margin-top:20%
   }
+
+  @media(max-width:1120px){
+    .container2{
+      margin-top: 50%;
+    }
+  }
+  @media(max-width:500px){
+    .container2{
+      margin-top: 100%;
+    }
+  }
 </style>
+
+
   <center>
 <img src="{% static 'images/brillsquillbooks.jpg' %}" width="400px">
  <div class="overlay"></div>
@@ -76,6 +89,7 @@
         left:50%;
         transform: translateX(-50%);
         margin-top:70px;
+        word-wrap: break-word; 
     }
 
     @media(max-width:500px){
