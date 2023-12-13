@@ -16,7 +16,7 @@
     <header>
         <nav class="the-menu">
             <a href="{% url 'home' %}" id="logo">
-                <p class="the-logo-word"><span style="color: orangered;"><img
+                <p class="the-logo-word"><span style="font-weight: bold;"><img
                             src="{% static 'images/logo.png' %}"></span>Brillsquill</p>
             </a>
 
@@ -85,7 +85,7 @@
                 {% if user.is_authenticated %}
                 <li style="margin-right: 30px;" class="the-button-for-login-g-bu-one">
 
-                    <a href="" style="border-radius: 50%;" class="get-one-button">
+                    <a href="{% url 'profile'  username=user.username %}" style="border-radius: 50%;" class="get-one-button">
                         <span style="font-size: 40px;" class="material-symbols-outlined">account_circle</span>
                     </a>
                     </li>
@@ -94,7 +94,7 @@
                     <li>
                         <a href="{% url 'signup' %}">Join</a>
                         </li>
-                        <li>
+                        <li  class="the-login-link" >
                         <a href="{% url 'login' %}">Login</a>
                         </li>
                     {% endif %}
@@ -178,6 +178,7 @@
             font-family: 'poppins', sans-serif;
         }
 
+
         body.dark-mode {
             background-color: #1a1a1a;
             color: #ffffff;
@@ -189,9 +190,14 @@
             padding-top: 8px;
             z-index: 10000;
             background-color: #F17720;
-            box-shadow: rgba(18, 2, 238, 0.24) 0px 3px 8px;
+            box-shadow: rgba(238, 195, 2, 0.24) 0px 3px 8px;
 
 
+        }
+
+        .the-logo-word{
+            position: relative;
+            top:2px;
         }
 
         #logo img {
@@ -247,13 +253,13 @@
             font-size: 25px;
             cursor: pointer;
             position: relative;
-            right: -150px;
+            right: -140px;
             top: -2px;
         }
 
         @media(max-width:800px) {
             .searchicon {
-                right: -50px;
+                right: 10px;
             }
         }
 
@@ -294,13 +300,9 @@
         .searchform:active {
             border: 1px transparent
         }
+       
 
-        @media(max-width:590px) {
-            .searchicon {
-                position: static;
-                margin-top: 5px;
-            }
-        }
+    
 
         .the-menu ul a {
             font-size: 16px;
@@ -421,7 +423,10 @@
             margin-right: 5px;
         }
 
-        @media(max-width:400px) {
+        .the-login-link{
+            margin-right:40px;
+        }
+        @media(max-width:500px) {
             #logo img {
                 margin-left: -30px;
                 margin-right: 5px;
@@ -429,6 +434,13 @@
 
             .the-logo-word {
                 font-size: 20px;
+                top:-5px
+            }
+            .the-login-link{
+                margin-right: -40%;
+            }
+            .menu-icon{
+                margin-top:-5px;
             }
         }
 
@@ -458,6 +470,8 @@
             cursor: pointer;
             display: none;
         }
+
+        
     </style>
 
     {% block content %}

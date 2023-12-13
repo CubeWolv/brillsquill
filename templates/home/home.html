@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base.html' %}{% load humanize %}
 {% load static %}
 
 
@@ -24,9 +24,139 @@
 
 {% block content %}
 
+<div class="container1">
+
+  {% if user.is_authenticated %}
+  {% else %}
+
+<style>
+  .container2{
+    margin-top:20%
+  }
+</style>
+  <center>
+<img src="{% static 'images/brillsquillbooks.jpg' %}" width="400px">
+ <div class="overlay"></div>
+<p>Join and get more insights.</p>
+<a href="{% url 'signup' %}"><button>JOIN</button></a>
+
+</center>
+{% endif %}
+</div>
+
+
+ 
+
+<div class="container2">
+
+  {% if poems %}
+
+      {% for poem in poems %}
+      <div class="container-for-poem">
+        <p class="author">{{poem.author}}</p>
+        <p class="poem-title"> {{ poem.title }}  <span>  {{ poem.created_on|timesince|naturaltime }} ago</span></p>
+        <hr>
+        <p> {{ poem.poem | safe }}</p>
+     </div>
+      {% endfor %}
+
+{% else %}
+  <p>No poems yet.</p>
+{% endif %}
+
+</div>
+
+
+<style>
+      .container-for-poem{
+        padding:10px;
+        width:60%;
+        border:1px solid grey;
+        position: relative;
+        left:50%;
+        transform: translateX(-50%);
+        margin-top:70px;
+    }
+
+    @media(max-width:500px){
+        .container-for-poem{
+            width:95%;
+        }
+
+    }
+    .poem-title{
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .poem-title span{
+        margin-left:5px;
+        font-size: 10px;
+        font-weight: lighter;
+    }
+
+    .author{
+      color:orangered;
+    }
+.no-poems-yet{
+ text-align: center;
+ font-size: 30px;
+ font-weight: bold;
+ margin-top:100px;
+}
+</style>
 
 
 
 
+
+
+
+<style>
+  .container1{
+    position: absolute;
+    width:100%;
+    z-index: -10;
+  }
+    .container1 img{
+       width:100%;
+       height: 40vh;
+    }
+  
+    .container1 p{
+      position: absolute;
+      left:50%;
+      transform: translateX(-50%);
+      top:30%;
+      font-size: 30px;
+      color:white;
+    }
+  
+    .container1 button{
+      width:300px;
+      border:1px solid black;
+      padding:10px;
+      position: absolute;
+      top:70%;
+      left:50%;
+      transform: translateX(-50%);
+    }
+  
+    @media(max-width:500px){
+      .container1 button{
+  top:80%;
+      }
+    }
+    .container1 button:hover{
+      background-color: #1a1a1a;;
+      color:white;
+    }
+    .overlay{
+      background: linear-gradient(transparent ,rgba(0, 0, 0, 0.137));
+      height: 40vh;
+      width:100%;
+      position: absolute;
+      top:0%;
+    }
+  </style>
 
 {% endblock content %}

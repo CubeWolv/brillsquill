@@ -1,5 +1,6 @@
 from django.shortcuts import render
+from profiles.models import Poems  # Make sure to import your Poem model
 
-# Create your views here.
 def home(request):
-    return render(request, './home/home.html')
+    poems = Poems.objects.all()
+    return render(request, 'home/home.html', {'poems': poems})

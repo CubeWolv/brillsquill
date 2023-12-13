@@ -1,6 +1,7 @@
 # forms.py
 from django import forms
 from django.contrib.auth.models import User
+from .models import UserProfile ,Poems
 
 class SignupForm(forms.Form):
     username = forms.CharField(label='Username', max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Username'}))
@@ -10,3 +11,39 @@ class SignupForm(forms.Form):
     class Meta:
         model = User
         fields = ['username', 'password', 'email']
+
+
+
+
+class UserProfileForm(forms.ModelForm):
+    image = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'custom-file-input'}))
+
+    class Meta:
+        model = UserProfile
+        fields = ['image']
+
+
+class PoemForm(forms.ModelForm):
+    class Meta:
+        model = Poems
+        fields = ['title', 'poem']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # Remove labels and set placeholders for each field
+        self.fields['title'].label = ''
+        self.fields['title'].widget.attrs['placeholder'] = 'Title'
+        
+        self.fields['poem'].label = ''
+        self.fields['poem'].widget.attrs['placeholder'] = 'Write your Poem'
+
+    def save(self, commit=True, user=None):
+        instance = super().save(commit=False)
+        if user:
+            instance.author = user
+        if commit:
+            instance.save()
+        return instance
+
+

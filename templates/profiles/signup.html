@@ -30,7 +30,10 @@
         {{ form.username }}
         {{ form.email }}
         {{ form.password }}
-        
+
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="text-align: center; color: red;list-style: none;margin-left:-35px;">{{ message }}</li>
+    {% endfor %}
     
         <input type="submit" value="Signup">
     
