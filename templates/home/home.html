@@ -60,7 +60,7 @@
 
 
 {% if poems %}
-
+<div class="container2">
 {% for poem in poems %}
 <div class="container-for-poem">
   <div>
@@ -142,12 +142,14 @@
 <div id="deleteConfirmationOverlay" style="display: none;">
   <div>
     <center>
+      {% if user.is_authenticated %}
       <p>Are you sure you want to delete this poem?</p>
       <div class="the-delete-buttons">
         <a href="{% url 'delete_poem' username=user.username poem_id=poem.id %}"> Delete <span style=color:red;
             class="material-symbols-outlined">delete_forever</span></a>
         <button onclick="cancelDelete()">Cancel</button>
       </div>
+      {% endif %}
     </center>
   </div>
 </div>
@@ -546,7 +548,6 @@
 
 
 <div id="copyAlert" class="alert-fluid" style="display: none;"></div>
-
 
 <style>
   .alert-fluid {
