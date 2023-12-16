@@ -1,0 +1,60 @@
+ <!--alert.html -->
+<div>
+    <div class="alert-fluid {% if message_type %}{{ success }}{% endif %}">
+        {{ message }}
+    </div>
+</div>
+
+<div>
+    <div class="alert-fluid {% if message_type %}{{ delete }}{% endif %}">
+        {{ message }}
+    </div>
+</div>
+
+<style>
+    .alert-fluid {
+        width: 350px;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;  /* Set initial opacity to 0 */
+        transition: opacity 0.5s ease, transform 0.5s ease, top 0.5s ease; /* Add transitions */
+        padding: 10px;
+        border-radius: 3px;
+        text-align: center;
+        top: 90%;
+        color: white;
+        font-size: 13px;
+        border-radius: 5px;
+        background-color: orangered;
+        font-weight: bold;
+    }
+
+    .alert-fluid.fade-in {
+        opacity: 1;
+        top: 80%; /* Adjust the top value as needed */
+    }
+
+    .alert-fluid.fade-out {
+        opacity: 0;
+        top: 90%;
+    }
+
+    body.dark-mode .alert-fluid {
+        color: white;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var alertElement = document.querySelector('.alert-fluid');
+        
+        // Add the 'fade-in' class to trigger the entrance animation
+        alertElement.classList.add('fade-in');
+        
+        // Set a timeout to add the 'fade-out' class after a certain delay (e.g., 2 seconds)
+        setTimeout(function () {
+            alertElement.classList.add('fade-out');
+        }, 2000);
+    });
+</script>

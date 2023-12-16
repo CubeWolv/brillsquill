@@ -8,7 +8,7 @@
     {% endblock %}
 </head>
 <link rel="stylesheet" href="{% static 'css/base/base.css' %}">
-<link rel="icon" href="{% static 'images/smalllogo.png' %}">
+<link rel="icon" href="{% static 'images/smallbrillzquill_logo (3).png' %}">
 
 <body>
 
@@ -17,7 +17,7 @@
         <nav class="the-menu">
             <a href="{% url 'home' %}" id="logo">
                 <p class="the-logo-word"><span style="font-weight: bold;"><img
-                            src="{% static 'images/logo.png' %}"></span>Brillsquill</p>
+                            src="{% static 'images/brillzquill_logo (3).png' %}"></span>Brillsquill</p>
             </a>
 
 
@@ -83,7 +83,10 @@
                             class="material-symbols-outlined">light_mode</span></a>
                 </li>
                 {% if user.is_authenticated %}
-                <li style="margin-right: 30px;" class="the-button-for-login-g-bu-one">
+                <li>
+                    <a href="logout">Logout</a>
+                </li>
+                <li style="margin-right: 30px;z-index: 222;" class="the-button-for-login-g-bu-one">
 
                     <a href="{% url 'profile'  username=user.username %}" style="border-radius: 50%;" class="get-one-button">
                         <span style="font-size: 40px;" class="material-symbols-outlined">account_circle</span>
