@@ -79,6 +79,9 @@
                     <a href="{% url 'home' %}" class="the-link-for-home the-links">Home</a>
                 </li>
                 <li>
+                    <a href="{% url 'contact' %}">Contact</a>
+                </li>
+                <li>
                     <a class="the-links" style="cursor: pointer;" onclick="toggleDarkMode()"> <span id="modeIcon"
                             class="material-symbols-outlined">light_mode</span></a>
                 </li>
@@ -192,6 +195,7 @@
             height: 80px;
             padding-top: 8px;
             z-index: 10000;
+            position: relative;
             background-color: #F17720;
             box-shadow: rgba(238, 195, 2, 0.24) 0px 3px 8px;
 

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-pph0%#&w&le3f$#y-ii0zy$i)e1(u5aueqtt^6-en=)0$u599h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost','*']
 
 
 # Application definition
@@ -163,3 +163,10 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT =587
+EMAIL_HOST_USER = 'afflex.marketing@gmail.com'
+EMAIL_HOST_PASSWORD = 'okvs ygcq hejs ovkt'

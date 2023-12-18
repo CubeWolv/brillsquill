@@ -32,7 +32,7 @@
 </center>
 </div>
 
-
+{% if poem %}
 <div class="container-for-poem">
     <p class="author">{{poem.author}}</p>
     <p class="poem-title"> {{ poem.title }}  <span>  {{ poem.created_on|timesince|naturaltime }} ago</span></p>
@@ -41,6 +41,59 @@
  </div>
 
 
+
+
+
+ 
+
+
+ {% elif image_poem %}
+ <!-- Display ImagePoem content -->
+
+
+
+
+ <div class="container-for-poem">
+    <div class="fluid-auth-img">
+        <p class="author">
+
+    {% if user_profile %}
+    <img  class="home-profile-i"  src="{{ user_profile.image.url }}" alt="Author's Profile Image"></p>
+  {% endif %}
+  <p class="author-comb">{{ user_profile.person.username }}</p>
+</div>
+
+ <h2>{{ image_poem.title }}</h2>
+ <img src="{{ image_poem.image.url }}" alt="Image Poem">
+ </div>
+
+ 
+ 
+
+  {% else %}
+
+ <!-- Handle the case when neither Poem nor ImagePoem is found -->
+ <p>No content found for the given ID.</p>
+{% endif %}
+<Style>
+    .fluid-auth-img{
+      display: flex;
+    }
+    .home-profile-i{
+      width:40px;
+      height:40px;
+      border-radius: 100%;
+      margin-top:-15px;
+      margin-right: px;
+    }
+ .author-comb{
+  margin-left:10px;
+ }
+
+ .author{
+    margin-top:10px;
+ }
+  </Style>
 <style>
     .share-nav{
         background-color: #ffffff;
@@ -72,6 +125,9 @@
         margin-top:70px;
         word-wrap: break-word; 
         z-index: -2;
+    }
+    .container-for-poem img{
+        width:100%;
     }
 
     @media(max-width:500px){

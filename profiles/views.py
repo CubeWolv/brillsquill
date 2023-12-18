@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate ,login as dj_login,logout
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import SignupForm, UserProfileForm,PoemForm
-from .models import UserProfile,Poems
+from .forms import SignupForm, PoemForm
+from django.contrib.auth.decorators import login_required
+from .models import UserProfile,Poems,ImagePoem
+from itertools import chain
 
 
 
@@ -36,7 +38,7 @@ def login(request):
     if 'next' in request.POST:
         return redirect(request.POST['next'])
 
-    return render(request, './profiles/login.html', {'page': page})
+    return render(request, './profiles/join/login.html', {'page': page})
 
 
 def signup(request):
@@ -63,48 +65,48 @@ def signup(request):
     else:
         form = SignupForm()
 
-    return render(request, 'profiles/signup.html', {'form': form})
+    return render(request, 'profiles/join/signup.html', {'form': form})
 
 
-from django.contrib.auth.decorators import login_required
-
+from django.utils import timezone
+from operator import attrgetter
 @login_required
 def profiles(request, username):
-    # Assuming you have imported necessary modules and classes
-
-    user = request.user  # Get the currently authenticated user
+    user = request.user
     user_profile, created = UserProfile.objects.get_or_create(person=user)
+
+    poems = Poems.objects.filter(author=user)
+    image_poems = ImagePoem.objects.filter(author=user)
+
+    # Combine the two querysets and sort them by created_on timestamp
+    combined_poems = sorted(
+        chain(poems, image_poems),
+        key=attrgetter('created_on'),
+        reverse=True
+    )
 
     poem_form = PoemForm(request.POST or None)
 
     if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
-        if form.is_valid():
-            # Update the profile with the new data
-            form.save()
-
-            # Handle poem form submission
+        if 'poem_submit' in request.POST:
             if poem_form.is_valid():
                 poem_form.save(user=user_profile.person)
-
-            return redirect('profile', username=user.username)
-    else:
-        form = UserProfileForm(instance=user_profile)
-
-    # Fetch poems for the logged-in user
-    poems = Poems.objects.filter(author=user)
+                return redirect('profile', username=user.username)
+        elif 'image_poem_submit' in request.POST:
+            title = request.POST.get('title')
+            image = request.FILES.get('image')
+            if title and image:
+                image_poem = ImagePoem.objects.create(author=user, title=title, image=image, created_on=timezone.now())
+                return redirect('profile', username=user.username)
 
     context = {
         'username': username,
-        'form': form,
-        'user_profile': user_profile,
         'poem_form': poem_form,
-        'poems': poems,
-
+        'combined_poems': combined_poems,
+        'user_profile': user_profile,  # Add user_profile to the context
     }
 
-    return render(request, 'profiles/profile.html', context)
-
+    return render(request, 'profiles/profiles/profile.html', context)
 
 @login_required
 def delete_poem(request, username, poem_id):
@@ -117,6 +119,22 @@ def delete_poem(request, username, poem_id):
     poem.delete()
     messages.success(request, 'Poem deleted.') 
 
+    return redirect('profile', username=username)
+
+
+
+@login_required
+def delete_image_poem(request, username, image_poem_id):
+    user = request.user
+
+    # Ensure that the image poem belongs to the logged-in user
+    image_poem = get_object_or_404(ImagePoem, id=image_poem_id, author=user)
+
+    # Delete the image poem
+    image_poem.delete()
+    messages.success(request, 'Image Poem deleted.')
+
+    # Redirect to the profile page after deleting the image poem
     return redirect('profile', username=username)
 
 
@@ -145,12 +163,59 @@ def edit_poem(request, username, poem_id):
 
 
 
+
+@login_required
+def edit_image_poem(request, username, image_poem_id):
+    user = request.user
+    image_poem = get_object_or_404(ImagePoem, id=image_poem_id, author=user)
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        image = request.FILES.get('image')
+
+        # Update the image poem fields
+        image_poem.title = title
+        if image:
+            image_poem.image = image
+
+        image_poem.save()
+        messages.success(request, 'Image Poem edited successfully.')  # Add success message
+        return redirect('profile', username=username)
+    else:
+        # Populate the form with existing data
+        title = image_poem.title
+
+    context = {
+        'username': username,
+        'image_poem': image_poem,
+        'action': 'edit',
+        'title': title,
+        # Add any other necessary data for your template
+    }
+    return render(request, 'profiles/poem/editimagepoem.html', context)
+
+
+
+
 def share(request, poem_id):
-    poem = get_object_or_404(Poems, id=poem_id)
-    context = {'poem': poem}
+    poem = None
+    image_poem = None
+    user_profile = None
+
+    try:
+        # Try to get a Poem with the given ID
+        poem = get_object_or_404(Poems, id=poem_id)
+        user_profile = get_object_or_404(UserProfile, person=poem.author)
+    except:
+        try:
+            # If not a Poem, try to get an ImagePoem with the given ID
+            image_poem = get_object_or_404(ImagePoem, id=poem_id)
+            user_profile = get_object_or_404(UserProfile, person=image_poem.author)
+        except:
+            pass  # Handle the case when neither Poem nor ImagePoem is found
+
+    context = {'poem': poem, 'image_poem': image_poem, 'user_profile': user_profile}
     return render(request, 'profiles/poem/share.html', context)
-
-
 
 @login_required
 def accountcenter(request, username):

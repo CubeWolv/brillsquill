@@ -15,12 +15,6 @@ class SignupForm(forms.Form):
 
 
 
-class UserProfileForm(forms.ModelForm):
-    image = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'custom-file-input'}))
-
-    class Meta:
-        model = UserProfile
-        fields = ['image']
 
 
 class PoemForm(forms.ModelForm):
